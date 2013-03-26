@@ -18,13 +18,10 @@ public class SerialTest implements SerialPortEventListener {
 			"/dev/ttyUSB0", // Linux
 			"COM3", // Windows
 			};
-	// Buffered input stream from the port //
+	
 	private InputStream input;
-	// The output stream to the port //
 	private static OutputStream output;
-	// Milliseconds to block while waiting for port open //
 	private static final int TIME_OUT = 2000;
-	// Default bits per second for COM port. //
 	private static final int DATA_RATE = 9600;
 
 	@SuppressWarnings("rawtypes")
@@ -120,10 +117,10 @@ public class SerialTest implements SerialPortEventListener {
 		
 		datax = args;
 		if (datax > 0){
-			out = 3;
+			out = 4;
 		}
 		else if (datax < 0){
-			out = 4;
+			out = 3;
 		}
 		if (datax == 0){
 			out = 9;
@@ -135,9 +132,13 @@ public class SerialTest implements SerialPortEventListener {
 		write(args);
 	}
 	
-	public static void write(int out) throws IOException{
+	public static void write(int out){
 		if(connected == true){
-			output.write(out);
+			try {
+				output.write(out);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 			System.out.println(out);
 			String output = Integer.toString(out);
 			trackMouse.fillLog(output);
